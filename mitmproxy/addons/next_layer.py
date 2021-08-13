@@ -88,11 +88,16 @@ class NextLayer:
             return False
 
         if ctx.options.ignore_hosts:
-            return any(
+            print("Checking against the ignore list:")
+            print(hostnames)
+            print(ctx.options.ignore_hosts)
+            decision = any(
                 re.search(rex, host, re.IGNORECASE)
                 for host in hostnames
                 for rex in ctx.options.ignore_hosts
             )
+            print("Decided", decision)
+            return decision
         elif ctx.options.allow_hosts:
             return not any(
                 re.search(rex, host, re.IGNORECASE)
